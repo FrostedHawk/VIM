@@ -1,4 +1,4 @@
-// Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
+// copyright The Perfect Game Company 2016
 
 #include "VIM.h"
 #include "VIMCharacter.h"

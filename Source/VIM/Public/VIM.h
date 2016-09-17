@@ -1,9 +1,11 @@
-// Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
+// copyright The Perfect Game Company 2016
 
 #ifndef __VIM_H__
 #define __VIM_H__
 
 #include "Engine.h"
+#include "VSaveGame.h"
+#include "Kismet/GameplayStatics.h"
 // This is NOT included by default in an empty project! It's required for replication and setting of the GetLifetimeReplicatedProps
 #include "Net/UnrealNetwork.h"
 
