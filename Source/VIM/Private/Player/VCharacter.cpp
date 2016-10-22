@@ -9,6 +9,7 @@
 #include "VCarryObjectComponent.h"
 #include "VPlayerController.h"
 #include "VBaseCharacter.h"
+#include "Animation/AnimInstance.h" 
 #include "AI/Navigation/NavigationSystem.h"
 
 
@@ -613,9 +614,10 @@ bool AVCharacter::WeaponSlotAvailable(EInventorySlot CheckSlot)
 }
 void AVCharacter::StopAllAnimMontages()
 {
-	USkeletalMeshComponent* UseMesh = GetMesh();
-	if (UseMesh && UseMesh->AnimScriptInstance)
+    USkeletalMeshComponent* UseMesh = GetMesh();
+	if (ensure(UseMesh) && ensure(UseMesh->AnimScriptInstance))
 	{
+        
 		UseMesh->AnimScriptInstance->Montage_Stop(0.0f);
 	}
 }
