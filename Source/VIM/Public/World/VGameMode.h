@@ -50,8 +50,9 @@ protected:
 	float BotSpawnInterval;
 
 	/* Called once on every new player that enters the gamemode */
-	virtual FString InitNewPlayer(class APlayerController* NewPlayerController, const TSharedPtr<const FUniqueNetId>& UniqueId, const FString& Options, const FString& Portal = TEXT(""));
-
+	//QT  changed the InitNewPlayer() to second version as the first version seems to not be called by the UE engine anymore 2016/11/02
+	//To fix bug of Player and AI being on same team at start of game and not being able to damage each other
+	virtual FString InitNewPlayer(class APlayerController* NewPlayerController, const FUniqueNetIdRepl& UniqueId, const FString& Options, const FString& Portal = TEXT(""));
 	/* The teamnumber assigned to Players */
 	int32 PlayerTeamNum;
 

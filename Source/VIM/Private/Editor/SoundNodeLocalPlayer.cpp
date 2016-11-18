@@ -5,12 +5,21 @@
 #include "SoundNodeLocalPlayer.h"
 
 
-void USoundNodeLocalPlayer::ParseNodes(FAudioDevice* AudioDevice, const UPTRINT NodeWaveInstanceHash, FActiveSound& ActiveSound, const FSoundParseParameters& ParseParams, TArray<FWaveInstance*>& WaveInstances)
+void USoundNodeLocalPlayer::ParseNodes(
+    FAudioDevice* AudioDevice, 
+    const UPTRINT NodeWaveInstanceHash, 
+    FActiveSound& ActiveSound, 
+    const FSoundParseParameters& ParseParams, 
+    TArray<FWaveInstance*>& WaveInstances)
 {
 	// The accesses to the Pawn will be unsafe once we thread audio, deal with this at that point
 	check(IsInGameThread());
 
-	AActor* SoundOwner = ActiveSound.GetAudioComponent() ? ActiveSound.GetAudioComponent()->GetOwner() : nullptr;
+    UAudioComponent* AudioComponent = UAudioComponent::GetAudioComponentFromID(ActiveSound.GetAudioComponentID());
+	AActor* SoundOwner = AudioComponent ? AudioComponent->GetOwner() : nullptr;
+
+    
+
 	APlayerController* PCOwner = Cast<APlayerController>(SoundOwner);
 	APawn* PawnOwner = (PCOwner ? PCOwner->GetPawn() : Cast<APawn>(SoundOwner));
 
@@ -19,7 +28,12 @@ void USoundNodeLocalPlayer::ParseNodes(FAudioDevice* AudioDevice, const UPTRINT 
 
 	if (PlayIndex < ChildNodes.Num() && ChildNodes[PlayIndex])
 	{
-		ChildNodes[PlayIndex]->ParseNodes(AudioDevice, GetNodeWaveInstanceHash(NodeWaveInstanceHash, ChildNodes[PlayIndex], PlayIndex), ActiveSound, ParseParams, WaveInstances);
+		ChildNodes[PlayIndex]->ParseNodes(
+            AudioDevice, 
+            GetNodeWaveInstanceHash(NodeWaveInstanceHash, ChildNodes[PlayIndex], PlayIndex), 
+            ActiveSound, 
+            ParseParams, 
+            WaveInstances);
 	}
 }
 
